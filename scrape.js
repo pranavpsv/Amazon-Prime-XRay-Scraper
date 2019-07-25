@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 const CREDS = require('./creds');
+const teluguMovies = require("./teluguLinks");
 const links = require(__dirname + "/links");
-const movieLinksArray = links.movieLinksArray;
+const movieLinksArray = teluguMovies.movieLinks;
 const lengthmovieArray = movieLinksArray.length;
 console.log(lengthmovieArray);
 (async () => {
@@ -54,7 +55,7 @@ console.log(lengthmovieArray);
     //             });
     //     } 
     //   });
-    await recurseThroughLinks(25, page);
+    await recurseThroughLinks(0, page);
 
 } catch (e) {
     console.log('our error', e);
@@ -72,7 +73,23 @@ console.log(lengthmovieArray);
     const movieDetails = await page.evaluate(() => document.querySelector(".dv-node-dp-badges").innerText);
     if (movieDetails.includes("X-Ray")) {
     let movieTitle = await page.evaluate(() => document.querySelector('.dv-node-dp-title').innerText);
-    movieTitle = movieTitle.match(/[a-zA-Z]+/g).join("_");
+    let movieMetadata = await page.evaluate(() => document.querySelector(".dv-dp-node-meta-info").innerText);
+    let MovieAudioLanguages = movieMetadata.split("Audio Languages")[1];
+    let movieLanguage = "(Other) ";
+    if (MovieAudioLanguages.includes("తెలుగు")) {
+        movieLanguage = "(Telugu) ";
+    } else if (MovieAudioLanguages.includes("English")) {
+        movieLanguage = "(English) ";
+    } else if (MovieAudioLanguages.includes("हिन्दी")) {
+        movieLanguage = "(Hindi) ";
+    } else if (MovieAudioLanguages.includes("தமிழ்")) {
+        movieLanguage = "(Tamil) ";
+    } else if (MovieAudioLanguages.includes("മലയാളം")) {
+        movieLanguage = "(Malayalam) ";
+    } else if (MovieAudioLanguages.includes("ಕನ್ನಡ")) {
+        movieLanguage = "(Kannada) ";
+    }
+    movieTitle = movieTitle.match(/[a-zA-Z0-9]+/g).join("_");
     await page.click(watch);
     var x = 1;
     page.on('response', async response => {
@@ -88,7 +105,7 @@ console.log(lengthmovieArray);
             console.log("innertext success");
             console.log(movieTitle);
             var fs = require('fs');
-            fs.writeFile(__dirname + "/jsonfiles/" + movieTitle + '_xray.json', innerText, 'utf8', function(err) {
+            fs.writeFile(__dirname + "/xray_jsonfiles/" + movieLanguage + movieTitle + '_xray.json', innerText, 'utf8', function(err) {
                 if (err) throw err;
                 console.log(String(link_number) + 'complete');
                 recurseThroughLinks(link_number + 1, page);

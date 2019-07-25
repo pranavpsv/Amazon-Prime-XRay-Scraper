@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.4.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.3.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@4.2.0"></script>
+        <script src="gantt_chart.js"></script>
+    </head>
+    <body>
+    <div class = "movie" style = "align-self: center;"></div>
+    <script>
+        var opt = {
+            renderer: "svg"
+        }
+    vegaEmbed('.movie', spec, opt);
+    </script>
+    </body>
+</html>

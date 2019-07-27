@@ -1,8 +1,10 @@
 const puppeteer = require('puppeteer');
 const CREDS = require('./creds');
 const teluguMovies = require("./teluguLinks");
+const tamilMovies = require("./tamilLinks");
+const malayalamMovies = require("./malayalamLinks");
 const links = require(__dirname + "/links");
-const movieLinksArray = teluguMovies.movieLinks;
+const movieLinksArray = malayalamMovies.movieLinks;
 const lengthmovieArray = movieLinksArray.length;
 console.log(lengthmovieArray);
 (async () => {
@@ -76,11 +78,12 @@ console.log(lengthmovieArray);
     let movieMetadata = await page.evaluate(() => document.querySelector(".dv-dp-node-meta-info").innerText);
     let MovieAudioLanguages = movieMetadata.split("Audio Languages")[1];
     let movieLanguage = "(Other) ";
-    if (MovieAudioLanguages.includes("తెలుగు")) {
-        movieLanguage = "(Telugu) ";
-    } else if (MovieAudioLanguages.includes("English")) {
+    if (MovieAudioLanguages.includes("English")) {
         movieLanguage = "(English) ";
-    } else if (MovieAudioLanguages.includes("हिन्दी")) {
+    }
+    else if (MovieAudioLanguages.includes("తెలుగు")) {
+        movieLanguage = "(Telugu) ";
+    }  else if (MovieAudioLanguages.includes("हिन्दी")) {
         movieLanguage = "(Hindi) ";
     } else if (MovieAudioLanguages.includes("தமிழ்")) {
         movieLanguage = "(Tamil) ";

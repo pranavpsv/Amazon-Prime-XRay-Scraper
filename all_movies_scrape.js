@@ -55,13 +55,13 @@ async function scrapeInfiniteScrollItems(
   await page.click(enterPassword);
   await page.keyboard.type(CREDS.password);
   await page.click(submit);
-  await page.goto('https://www.primevideo.com/region/na/search/ref=atv_nb_sr?phrase=telugu+movie&ie=UTF8');
+  await page.goto('https://www.primevideo.com/region/na/search/ref=atv_nb_sr?phrase=malayalam&ie=UTF8');
   // Scroll and extract items from the page.
   const items = await scrapeInfiniteScrollItems(page, extractItems, 572);
   console.log(items);
 
   // Save extracted items to a file.
-  fs.writeFileSync('./teluguLinks.txt', JSON.stringify(items));
+  fs.writeFileSync('./malayalamLinks.txt', JSON.stringify(items));
 
   // Close the browser.
   await browser.close();

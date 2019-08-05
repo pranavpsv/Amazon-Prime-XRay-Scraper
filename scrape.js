@@ -3,8 +3,10 @@ const CREDS = require('./creds');
 const teluguMovies = require("./teluguLinks");
 const tamilMovies = require("./tamilLinks");
 const malayalamMovies = require("./malayalamLinks");
+const englishMovies = require('./englishLinks');
+const hindiMovies = require("./hindiLinks");
 const links = require(__dirname + "/links");
-const movieLinksArray = malayalamMovies.movieLinks;
+const movieLinksArray = hindiMovies.movieLinks;
 const lengthmovieArray = movieLinksArray.length;
 console.log(lengthmovieArray);
 (async () => {
@@ -23,47 +25,11 @@ console.log(lengthmovieArray);
     await page.click(enterPassword);
     await page.keyboard.type(CREDS.password);
     await page.click(submit);
-    // const search = "#pv-search-nav";
-    // await page.waitForSelector(search);
-    // await page.click(search);
-    // await page.keyboard.type(movieName);
-    // await page.keyboard.press('Enter');
-    // const result = "#av-search > div.av-grid-wrapper > div > div:nth-child(1) > div.pbuZvs.mustache._1lBA3s > div._3nBfep > div._2sEwJA > span > a";
-    // await page.waitForSelector(result);
-    // await page.click(result);
-    // await page.goto(movieLinksArray[0]);
-    // const watch = "#dv-action-box > div > div > div > div._1y_Ulh.Ri9l84._2WW1HP > span > div > a > span.zx3N80 > span:nth-child(1)";
-    // await page.waitForSelector(watch);
-    // let movieTitle = await page.evaluate(() => document.querySelector('.dv-node-dp-title').innerText);
-    // movieTitle = movieTitle.match(/[a-zA-Z]+/g).join("_");
-    // await page.click(watch);
-    // var x = 1;
-    // page.on('response', async response => {
-    //     if ((response.url().includes("xray?")) && (x == 1)) {
-    //         x = 0;
-    //         console.log("Success!!!");
-    //         console.log("url: " + response.url());
-    //         await page.goto(response.url());
-    //         await page.content();
-    //         innerText = await page.evaluate(() =>  {
-    //             return (document.querySelector("body").innerText); 
-    //         });
-    //         console.log("innertext success");
-    //         console.log(movieTitle);
-    //         var fs = require('fs');
-    //         fs.writeFile(movieTitle + '_xray.json', innerText, 'utf8', function(err) {
-    //             if (err) throw err;
-    //             console.log('complete');
-    //             });
-    //     } 
-    //   });
-    await recurseThroughLinks(0, page);
-
+    await recurseThroughLinks(299, page);
 } catch (e) {
     console.log('our error', e);
 }
   })();
-
 
   async function recurseThroughLinks(link_number, page) {
       if (link_number == (lengthmovieArray)) {
@@ -80,12 +46,11 @@ console.log(lengthmovieArray);
     let movieLanguage = "(Other) ";
     if (MovieAudioLanguages.includes("English")) {
         movieLanguage = "(English) ";
-    }
-    else if (MovieAudioLanguages.includes("తెలుగు")) {
-        movieLanguage = "(Telugu) ";
-    }  else if (MovieAudioLanguages.includes("हिन्दी")) {
+    } else if (MovieAudioLanguages.includes("हिन्दी")) {
         movieLanguage = "(Hindi) ";
-    } else if (MovieAudioLanguages.includes("தமிழ்")) {
+    } else if (MovieAudioLanguages.includes("తెలుగు")) {
+        movieLanguage = "(Telugu) ";
+    }  else if (MovieAudioLanguages.includes("தமிழ்")) {
         movieLanguage = "(Tamil) ";
     } else if (MovieAudioLanguages.includes("മലയാളം")) {
         movieLanguage = "(Malayalam) ";
@@ -98,14 +63,12 @@ console.log(lengthmovieArray);
     page.on('response', async response => {
         if ((response.url().includes("xray?")) && (x == 1)) {
             x = 0;
-            console.log("Success!!!");
             console.log("url: " + response.url());
             await page.goto(response.url());
             await page.content();
             innerText = await page.evaluate(() =>  {
                 return (document.querySelector("body").innerText); 
             });
-            console.log("innertext success");
             console.log(movieTitle);
             var fs = require('fs');
             fs.writeFile(__dirname + "/xray_jsonfiles/" + movieLanguage + movieTitle + '_xray.json', innerText, 'utf8', function(err) {

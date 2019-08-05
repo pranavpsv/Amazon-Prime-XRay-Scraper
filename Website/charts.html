@@ -12,24 +12,24 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.3.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@4.2.0"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="charts.js"></script>
-    <!-- <script src="topCharacters.js"></script> -->
 </head>
-
 <body>
+    <div class="background">
     <div class="card text-center">
         <div class="card-header">
+            <h2 class="app1">{{movieName}} </h2>
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <button class="nav-link active charts" id="button1">Movie Gantt Chart</button>
+                    <button class="nav-link active charts" id="button1">Characters' Timeline across Movie Runtime</button>
                 </li>
                 <li class="nav-item">
                     <button class="nav-link charts" id="button2">Top Characters Screentime</button>
                 </li>
             </ul>
         </div>
-        <h5 class="card-title">Movie Gantt Chart</h5>
+        <h5 class="card-title"></h5>
 
         <div class="card-body gantt" id="gantt">
         </div>
@@ -41,7 +41,22 @@
             <div class="col-3"></div>
         </div>
     </div>
+</div>
     <script>
+        $("h5").text($("#button1").text());
+        fetch('/moviename')
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(myJson) {
+              let movieName = myJson;
+              let app1 = new Vue({
+                  el: ".app1",
+                  data: {
+                    movieName: movieName
+                  }
+              });
+            });
         var opt = {
             renderer: "svg"
         }

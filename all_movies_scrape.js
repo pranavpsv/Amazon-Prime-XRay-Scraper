@@ -10,10 +10,6 @@ function extractItems() {
       console.log(element.href);
     items.push(element.href);
   }
-//   hrefs = await page.evaluate(() => {
-//     const anchors = document.querySelectorAll('a');
-//     return Array.from(anchors).map(a => a.href);
-//   });
   return items;
 }
 
@@ -55,13 +51,13 @@ async function scrapeInfiniteScrollItems(
   await page.click(enterPassword);
   await page.keyboard.type(CREDS.password);
   await page.click(submit);
-  await page.goto('https://www.primevideo.com/region/na/search/ref=atv_nb_sr?phrase=malayalam&ie=UTF8');
+  await page.goto('https://www.primevideo.com/region/na/search/ref=atv_nb_sr?phrase=hindi+movie&ie=UTF8');
   // Scroll and extract items from the page.
-  const items = await scrapeInfiniteScrollItems(page, extractItems, 572);
+  const items = await scrapeInfiniteScrollItems(page, extractItems, 1158);
   console.log(items);
 
   // Save extracted items to a file.
-  fs.writeFileSync('./malayalamLinks.txt', JSON.stringify(items));
+  fs.writeFileSync('./hindiLinks.txt', JSON.stringify(items));
 
   // Close the browser.
   await browser.close();

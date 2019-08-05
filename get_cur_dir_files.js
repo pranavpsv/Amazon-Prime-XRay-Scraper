@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
-const directoryPath = path.join(__dirname, 'xray_jsonfiles');
+const directoryPath = path.join(__dirname, "Website", 'xray_jsonfiles');
+console.log(directoryPath);
 var xray_list = [];
 fs.readdir(directoryPath, function (err, files) {
     //handling error
@@ -12,14 +13,9 @@ fs.readdir(directoryPath, function (err, files) {
         // Do whatever you want to do with the file
         xray_list.push(file);
     });
+    xray_list.forEach(item => {
+        console.log(item);
+    });
+
 });
 
-xray_list = xray_list.filter(item => {
-    if (!item.includes(".json")) {
-        return item;
-    }
-});
-
-xray_list.forEach(item => {
-    console.log(item);
-});

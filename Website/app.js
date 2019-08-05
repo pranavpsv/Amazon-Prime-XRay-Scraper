@@ -46,7 +46,6 @@ app.use(express.static("public"));
         });
         app.get("/chart", async (req, res) => {
             result = [];
-            // console.log(jsonArray);
             await jsonArray.reduce(function(res, value) {
               if (!res[value.character]) {
                 res[value.character] = { character: value.character, duration: 0 };
@@ -61,11 +60,9 @@ app.use(express.static("public"));
             res.json(movieName);
         });
         app.post("/", async (req, res) => {
-            // console.log(req.body);
             const movieFileName = req.body.movieFileName;
             movieName = getMovieName(movieFileName);
             const csvPath = path.join(__dirname, 'xray_jsonfiles', movieFileName);
-            // console.log(csvPath);
             jsonArray = await csv().fromFile(csvPath);
             res.redirect("/chart");
         });

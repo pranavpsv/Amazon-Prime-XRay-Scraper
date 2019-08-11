@@ -14,3 +14,16 @@ xray_csvfiles/
 teluguLinks.txt
 items
 old_xray_json_files/
+englishLinks.js
+englishLinks.txt
+hindiLinks.js
+hindiLinks.txt
+sample/
+telugujson/
+Website/testing.html
+Website/public/sankey.html
+Website/public/sankey.json
+Website/sankey.html
+Website/vl2vg.js
+Website/spec.json
+Website/xray_jsonfiles_old/
